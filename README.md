@@ -98,7 +98,7 @@ Normally a Bluetooth device is only discoverable for a limited amount of time. S
 
 Set the DiscoverableTimeout in */etc/bluetooth/main.conf* to 0
 
-```bash
+```txt
 # How long to stay in discoverable mode before going back to non-discoverable
 # The value is in seconds. Default is 180, i.e. 3 minutes.
 # 0 = disable timer, i.e. stay discoverable forever
@@ -124,6 +124,8 @@ All other Bluetooth services are rejected.
 Copy the included file **script/a2dp-agent** to `/usr/local/bin` and make the file executable with
 
 ```bash
+# go back to volumiobluetooth folder
+cd /home/volumio/volumiobluetooth
 sudo cp script/a2dp-agent /usr/local/bin/ && sudo chmod +x /usr/local/bin/a2dp-agent
 ```
 
@@ -134,11 +136,12 @@ Before continuing, verify that the agent is functional. The Raspberry Pi should 
 Note: At this point the device will not output any audio. This step is only to verify the Bluetooth is discoverable and bindable.
 
 1. Manually run the agent by executing
-```
+```bash
 sudo /usr/local/bin/a2dp-agent
 ```
 2. Attempt to pair and connect with the Raspberry Pi using your phone or computer.
 3. The agent should output the accepted and rejected Bluetooth UUIDs
+
 ```
 A2DP Agent Registered
 AuthorizeService (/org/bluez/hci0/dev_94_01_C2_47_01_AA, 0000111E-0000-1000-8000-00805F9B34FB)
@@ -153,9 +156,10 @@ Rejecting non-A2DP Service
 
 To make the A2DP Bluetooth Agent run on boot copy the included file **bt-agent-a2dp.service** to `/etc/systemd/system`.
 Now run the following command to enable the A2DP Agent service
-```
+
+```bash
 cd /etc/systemd/system
-sudo cp script/bt-agent-a2dp.service .
+sudo cp /home/volumio/volumiobluetooth/script/bt-agent-a2dp.service .
 sudo systemctl enable bt-agent-a2dp.service
 sudo systemctl start bt-agent-a2dp.service
 ```
@@ -170,7 +174,7 @@ The tool `bluealsa-aplay` is used to forward audio from the Bluetooth device to 
 
 find your card output:
 
-```
+```bash
 aplay -L
 ```
 
@@ -191,14 +195,14 @@ Now run the following command to enable A2DP Playback service
 
 ```bash
 cd /etc/systemd/system
-sudo cp script/a2dp-playback.service .
+sudo cp /home/volumio/volumiobluetooth/script/a2dp-playback.service .
 # edit the a2dp a2dp-playback.service (line 8 to send the sound to the correct output)
+nano -w a2dp-playback.service
 sudo systemctl enable a2dp-playback.service
 sudo systemctl start a2dp-playback.service
 ```
 
 Reboot and enjoy!
-
 
 # References
 
