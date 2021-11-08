@@ -26,7 +26,9 @@ In the version of volumio 2.915, there is a mix of packages from Jessie and Stre
 To Revert from hybrid Stretch/Jessie Volumio images back to pristine Jessie, you can use the [following script](script/backToJessie.sh). (It comes from [here](https://gist.githubusercontent.com/ashthespy/b01c5a57570364971553ce34d77f11b6/raw/acd81fdb3e9fd5024ec515fd612fc0106efb2919/backToJessie.sh) and [this discussion](https://community.volumio.org/t/cannot-install-build-essential-package/46856/31))
 
 ```bash
-curl -fsSLO "https://gist.githubusercontent.com/ashthespy/b01c5a57570364971553ce34d77f11b6/raw/acd81fdb3e9fd5024ec515fd612fc0106efb2919/backToJessie.sh"
+# Temporarily enable ssh mode at http://volumio_ip/dev
+git clone https://github.com/barais/volumiobluetooth
+cd volumiobluetooth/script/
 chmod +x backToJessie.sh && sudo ./backToJessie.sh
 ```
 
@@ -38,18 +40,15 @@ sudo apt install build-essential
 
 ## Step 2: Install Bluez and bluealsa and other small stuffs
 
-This step comes from this [repo](https://github.com/pgporada/ansible-playbook-volumio-bluetooth)
-
 ### Step 2.1: play the ansible playbook to install Bluez and BlueAlsa
 
 ```bash
-    # Temporarily enable ssh mode at http://volumio_ip/dev
-
-    # On your own computer, not necessarily the raspberry pi, you can run
+    # On your own computer (not on volumio device), you can run
     sudo apt install ansible git sshpass
 
     # Get this repository onto your computer
-    cd ansible-playbook-volumio-bluetooth
+    git clone https://github.com/barais/volumiobluetooth
+    cd volumiobluetooth/ansible-playbook-volumio-bluetooth
 
     # Configure the Volumio server IP so that you're connecting to the correct device
     cd ansible-playbook-volumio-bluetooth
@@ -64,7 +63,7 @@ This playbook install:
 - BlueZ (compile and install) and bluealsa (compile and install)
 - bluealsa-aplay@.service
 - udev rules 99-input.rules
-- a2dp-autoconnect.sh script in /home/volumio/
+- *a2dp-autoconnect.sh* script in /home/volumio/
 
 ### Step 2.2: clean the installation
 
