@@ -186,6 +186,8 @@ Execute the following command to accept A2DP audio from any connected Bluetooth 
 bluealsa-aplay -vv 00:00:00:00:00:00 -D hw:CARD=sndrpihifiberry
 ```
 
+
+
 Play a song on the Bluetooth device and the Raspberry Pi should output audio on either the headphone jack or the HDMI port. See [this guide](https://www.raspberrypi.org/documentation/configuration/audio-config.md) for configuring the audio output device of the Raspberry Pi.
 
 ### Step 2.9: Install the audio playback as a service
